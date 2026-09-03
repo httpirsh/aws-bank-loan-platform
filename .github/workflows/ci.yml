@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend-tests:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+          POSTGRES_DB: testdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DJANGO_SECRET_KEY: ci-test-secret-key
+      DJANGO_DEBUG: "True"
+      DJANGO_ALLOWED_HOSTS: localhost
+      DB_NAME: testdb
+      DB_USER: testuser
+      DB_PASSWORD: testpass
+      DB_HOST: 127.0.0.1
+      DB_PORT: 5432
+      AWS_DEFAULT_REGION: us-east-1
+      AWS_BUCKET_NAME: test-bucket
+      AWS_COLLECTION_NAME: test-collection
+      AWS_DYNAMO_TABLE_NAME: Users
+      AWS_ACCESS_KEY_ID: testing
+      AWS_SECRET_ACCESS_KEY: testing
+      JWT_SECRET_KEY: ci-test-jwt-secret-key-32-bytes-long
+      LOAN_WORKFLOW_STATE_MACHINE_ARN: "arn:aws:states:us-east-1:123456789012:stateMachine:test"
+      SNS_NOTIFICATION_TOPIC_ARN: "arn:aws:sns:us-east-1:123456789012:test"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r bank_django/requirements.txt
+          pip install "moto[dynamodb]>=5.0.0,<6.0.0"
+
+      - name: Run Django test suite
+        working-directory: bank_django
+        run: python manage.py test api
+
+  frontend-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build frontend
+        run: cd bank_django/frontend && npx vite build
+
+      - name: Lint frontend
+        run: cd bank_django/frontend && npx eslint .

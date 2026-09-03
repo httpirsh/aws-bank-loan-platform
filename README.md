@@ -1,6 +1,10 @@
 # Bank Loan Application
 
+[![CI](https://github.com/httpirsh/mecd-es-bank-application/actions/workflows/ci.yml/badge.svg)](https://github.com/httpirsh/mecd-es-bank-application/actions/workflows/ci.yml)
+
 A loan-application platform (Django REST API + React frontend) built as a software engineering coursework project, deployed on AWS.
+
+![Architecture diagram](docs/architecture.svg)
 
 ## AWS architecture
 
@@ -39,6 +43,15 @@ make django_start   # builds the frontend and runs the Django dev server
 ```
 
 See `.env.example` for the full list of required variables (AWS credentials and region, RDS connection, Django and JWT secret keys, Step Functions state machine ARN).
+
+## Tests
+
+Backend tests run against a real PostgreSQL database and mock every AWS call (via [moto](https://github.com/getmoto/moto)), so nothing hits real AWS. CI (`.github/workflows/ci.yml`) runs them on every push and pull request against `main`, alongside a frontend build and lint check.
+
+```sh
+cd bank_django
+python manage.py test api
+```
 
 ## Deployment
 

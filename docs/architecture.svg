@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 395" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+  <rect x="0" y="0" width="1200" height="395" fill="#ffffff"/>
+
+  <text x="600" y="26" text-anchor="middle" font-size="17" font-weight="600" fill="#0f172a">Bank Loan Application &#8212; Architecture</text>
+
+  <!-- AWS cloud boundary -->
+  <rect x="50" y="195" width="1100" height="150" rx="14" fill="none" stroke="#FF9900" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text x="70" y="216" font-size="13" font-weight="600" fill="#B45309">AWS</text>
+
+  <!-- connector defs -->
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/>
+    </marker>
+  </defs>
+
+  <!-- top row connectors -->
+  <line x1="250" y1="65" x2="316" y2="65" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="540" y1="65" x2="606" y2="65" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- backend -> each AWS service -->
+  <line x1="750" y1="100" x2="150" y2="220" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="750" y1="100" x2="330" y2="220" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="750" y1="100" x2="510" y2="220" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="750" y1="100" x2="690" y2="220" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="750" y1="100" x2="870" y2="220" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="750" y1="100" x2="1050" y2="220" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- S3 -> Rekognition (face indexing pipeline) -->
+  <line x1="593" y1="265" x2="606" y2="265" stroke="#B45309" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="600" y="325" text-anchor="middle" font-size="10.5" fill="#B45309">S3 &#8594; Rekognition: index_faces command</text>
+
+  <!-- Top row: Client / Frontend / Backend -->
+  <g>
+    <rect x="30" y="30" width="220" height="70" rx="10" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="140" y="60" text-anchor="middle" font-size="14" font-weight="600" fill="#1E3A8A">Customer / Officer</text>
+    <text x="140" y="80" text-anchor="middle" font-size="12" fill="#1E3A8A">Browser</text>
+  </g>
+
+  <g>
+    <rect x="320" y="30" width="220" height="70" rx="10" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="430" y="60" text-anchor="middle" font-size="14" font-weight="600" fill="#1E3A8A">React Frontend</text>
+    <text x="430" y="80" text-anchor="middle" font-size="12" fill="#1E3A8A">Vite, served via Django</text>
+  </g>
+
+  <g>
+    <rect x="610" y="30" width="280" height="70" rx="10" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="750" y="58" text-anchor="middle" font-size="14" font-weight="600" fill="#1E3A8A">Django REST API</text>
+    <text x="750" y="78" text-anchor="middle" font-size="12" fill="#1E3A8A">hosted on AWS Elastic Beanstalk</text>
+  </g>
+
+  <!-- Bottom row: 6 AWS services -->
+  <g>
+    <rect x="68" y="220" width="165" height="90" rx="10" fill="#FFF7ED" stroke="#FF9900" stroke-width="1.5"/>
+    <text x="150" y="252" text-anchor="middle" font-size="13" font-weight="600" fill="#92400E">Amazon RDS</text>
+    <text x="150" y="269" text-anchor="middle" font-size="11" fill="#92400E">PostgreSQL</text>
+    <text x="150" y="286" text-anchor="middle" font-size="10.5" fill="#92400E">loan applications &amp;</text>
+    <text x="150" y="299" text-anchor="middle" font-size="10.5" fill="#92400E">evaluations</text>
+  </g>
+
+  <g>
+    <rect x="248" y="220" width="165" height="90" rx="10" fill="#FFF7ED" stroke="#FF9900" stroke-width="1.5"/>
+    <text x="330" y="252" text-anchor="middle" font-size="13" font-weight="600" fill="#92400E">Amazon DynamoDB</text>
+    <text x="330" y="272" text-anchor="middle" font-size="10.5" fill="#92400E">customer &amp; officer</text>
+    <text x="330" y="285" text-anchor="middle" font-size="10.5" fill="#92400E">user profiles</text>
+  </g>
+
+  <g>
+    <rect x="428" y="220" width="165" height="90" rx="10" fill="#FFF7ED" stroke="#FF9900" stroke-width="1.5"/>
+    <text x="510" y="252" text-anchor="middle" font-size="13" font-weight="600" fill="#92400E">Amazon S3</text>
+    <text x="510" y="272" text-anchor="middle" font-size="10.5" fill="#92400E">face images for</text>
+    <text x="510" y="285" text-anchor="middle" font-size="10.5" fill="#92400E">biometric login</text>
+  </g>
+
+  <g>
+    <rect x="608" y="220" width="165" height="90" rx="10" fill="#FFF7ED" stroke="#FF9900" stroke-width="1.5"/>
+    <text x="690" y="252" text-anchor="middle" font-size="13" font-weight="600" fill="#92400E">Amazon Rekognition</text>
+    <text x="690" y="272" text-anchor="middle" font-size="10.5" fill="#92400E">index &amp; search faces</text>
+    <text x="690" y="285" text-anchor="middle" font-size="10.5" fill="#92400E">for customer login</text>
+  </g>
+
+  <g>
+    <rect x="788" y="220" width="165" height="90" rx="10" fill="#FFF7ED" stroke="#FF9900" stroke-width="1.5"/>
+    <text x="870" y="252" text-anchor="middle" font-size="13" font-weight="600" fill="#92400E">AWS Step Functions</text>
+    <text x="870" y="272" text-anchor="middle" font-size="10.5" fill="#92400E">Bank-Loan-Machine</text>
+    <text x="870" y="285" text-anchor="middle" font-size="10.5" fill="#92400E">evaluation workflow</text>
+  </g>
+
+  <g>
+    <rect x="968" y="220" width="165" height="90" rx="10" fill="#FFF7ED" stroke="#FF9900" stroke-width="1.5"/>
+    <text x="1050" y="252" text-anchor="middle" font-size="13" font-weight="600" fill="#92400E">Amazon SNS</text>
+    <text x="1050" y="272" text-anchor="middle" font-size="10.5" fill="#92400E">officer</text>
+    <text x="1050" y="285" text-anchor="middle" font-size="10.5" fill="#92400E">notifications</text>
+  </g>
+
+  <!-- IAM footnote -->
+  <text x="1140" y="378" text-anchor="end" font-size="11" fill="#64748B">All AWS calls use scoped IAM credentials injected via environment variables.</text>
+</svg>
