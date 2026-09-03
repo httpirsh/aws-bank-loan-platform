@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 function getCSRFToken() {
   const cookies = document.cookie.split(';');
@@ -12,10 +12,6 @@ function getCSRFToken() {
 }
 
 const Login = () => {
-  const [step, setStep] = useState("login");
-  const [image, setImage] = useState(null);
-  const [message, setMessage] = useState("");
-
   // Start video stream when the page loads
   useEffect(() => {
     const video = document.getElementById('video');
@@ -36,7 +32,7 @@ const Login = () => {
       });
   }, []); // Empty dependency array ensures this runs only once when the component mounts
 
-  const handleLogin = async (e) => {
+  const handleLogin = async () => {
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
 

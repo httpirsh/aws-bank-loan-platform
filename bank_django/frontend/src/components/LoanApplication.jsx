@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 // Function to get the CSRF token from cookies
 function getCSRFToken() {

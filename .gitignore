@@ -6,7 +6,6 @@ __pycache__/
 !.env.example
 
 node_modules/
-package-lock.json
 nodesource_setup.sh
 bank_django/frontend/dist/
 
