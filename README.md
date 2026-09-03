@@ -6,6 +6,15 @@ A loan-application platform (Django REST API + React frontend) built as a softwa
 
 ![Architecture diagram](docs/architecture.svg)
 
+## What it does
+
+Handling loan applications by hand means manual verification, back-and-forth scheduling, and no clear audit trail. This project models that process end-to-end for two kinds of user:
+
+- **Customers** simulate a loan (amount, duration, or a target monthly payment) to see the interest rate and repayment plan up front, log in with facial recognition instead of a password, and submit the application for review.
+- **Bank officers** work through incoming applications and accept, reject, or request an interview — picking from available timeslots — with the system notifying them automatically when there's something new to act on.
+
+The point of building it wasn't just "a CRUD app with a database" — it's a small but complete example of wiring a real workflow (identity verification, asynchronous evaluation, notifications) to managed AWS services instead of hand-rolling each piece.
+
 ## AWS architecture
 
 | Service | Role in this project |
