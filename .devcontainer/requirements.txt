@@ -1,5 +1,5 @@
 # Core dependencies
-Django>=4.2,<5.0             # Django framework (LTS version)
+Django>=5.2.16,<5.3          # Django framework (LTS version) - kept in sync with bank_django/requirements.txt
 
 # Database adapter
 psycopg2>=2.9.7              # PostgreSQL adapter for Python
@@ -10,7 +10,7 @@ awsebcli>=3.21.0             # AWS Elastic Beanstalk deployment
 
 # Environment configuration
 python-decouple>=3.8         # Simplifies environment variable management
-python-dotenv>=0.21.0        # Load environment variables from .env files
+python-dotenv>=1.2.2         # Load environment variables from .env files
 
 # Development tools
 flake8>=6.1.0                # Linter for clean Python code
@@ -24,13 +24,13 @@ pytest-django>=4.5.2         # Django-specific pytest extensions
 daphne>=4.0.0                # ASGI server for handling WebSocket connections
 
 # JWT dependencies
-pyjwt>=2.4.0  # JWT library for encoding/decoding tokens
+pyjwt>=2.13.0  # JWT library for encoding/decoding tokens
 
 # Django REST Framework
-djangorestframework>=3.14.0  # Web API toolkit for Django
+djangorestframework>=3.17.2  # Web API toolkit for Django
 
 # Simple JWT for authentication
-djangorestframework-simplejwt>=5.0.0  # JWT authentication for Django REST Framework
+djangorestframework-simplejwt>=5.5.1  # JWT authentication for Django REST Framework
 
 # bcrypt for password hashing
 bcrypt>=4.0.1  # bcrypt password hashing library
