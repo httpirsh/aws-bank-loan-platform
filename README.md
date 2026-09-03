@@ -6,6 +6,8 @@ A loan-application platform (Django REST API + React frontend) built as a softwa
 
 ![Architecture diagram](docs/architecture.svg)
 
+*(Original planning diagram: [`docs/loans.drawio`](docs/loans.drawio), open in [diagrams.net](https://app.diagrams.net/).)*
+
 ## What it does
 
 Handling loan applications by hand means manual verification, back-and-forth scheduling, and no clear audit trail. This project models that process end-to-end for two kinds of user:

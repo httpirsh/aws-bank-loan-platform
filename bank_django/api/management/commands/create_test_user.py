@@ -1,10 +1,7 @@
-import boto3
 import bcrypt
 from django.core.management.base import BaseCommand
 
-# Initialize the DynamoDB client
-dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
-table = dynamodb.Table('Users')
+from api.models import User
 
 class Command(BaseCommand):
     help = 'Adds test users (customers and bank employees) to DynamoDB'
@@ -40,7 +37,7 @@ def add_user_to_dynamodb(command, username, email, phone, user_type, password=No
 
 
         # Add the user to the DynamoDB table
-        table.put_item(
+        User.get_dynamo_table().put_item(
             Item={
                 'username': username,
                 'email': email,

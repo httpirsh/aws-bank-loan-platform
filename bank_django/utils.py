@@ -55,10 +55,9 @@ def get_user_from_dynamodb(username):
     Retrieves a user from DynamoDB based on username.
     """
     try:
-        dynamodb = boto3.resource('dynamodb', region_name=settings.AWS_REGION)
-        table = dynamodb.Table(settings.AWS_DYNAMO_TABLE_NAME)
+        from api.models import User
 
-        response = table.get_item(Key={'username': username})
+        response = User.get_dynamo_table().get_item(Key={'username': username})
         if 'Item' in response:
             return response['Item']
         else:

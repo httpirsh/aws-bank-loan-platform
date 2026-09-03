@@ -1,7 +1,6 @@
 from .models import LoanSimulation, LoanDetails, User, LoanApplication, LoanEvaluation
 from boto3.dynamodb.conditions import Attr
 from django.http import JsonResponse
-from django.conf import settings
 from django.views import View
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -17,11 +16,6 @@ import logging
 from bank_website.settings import AWS_REGION, AWS_COLLECTION_NAME
 
 logger = logging.getLogger(__name__)
-
-# Initialize Rekognition and DynamoDB clients
-rekognition_client = boto3.client('rekognition', region_name=AWS_REGION)
-dynamodb = boto3.resource('dynamodb', region_name=AWS_REGION)
-table = dynamodb.Table('Users')
 
 class LoanSimulationView(View):
     def post(self, request, *args, **kwargs):
@@ -121,8 +115,7 @@ class LoginView(View):
         Retrieves user by face_id.
         """
         try:
-            dynamodb = boto3.resource('dynamodb', region_name=settings.AWS_REGION)
-            table = dynamodb.Table(settings.AWS_DYNAMO_TABLE_NAME)
+            table = User.get_dynamo_table()
             logger.debug(f"Searching for user with face_id: {face_id}")
 
             response = table.scan(

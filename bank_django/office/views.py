@@ -9,12 +9,8 @@ from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, FormView
 from api.models import LoanApplication, LoanEvaluation, User
-from bank_website.settings import AWS_REGION
 from utils import auth_user_is, generate_jwt_token
 logger = logging.getLogger(__name__)
-
-dynamodb = boto3.resource('dynamodb', region_name=AWS_REGION)
-table = dynamodb.Table('Users')
 
 def welcome_page(request):
     return render(request, 'welcomePage.html')
@@ -27,7 +23,7 @@ def manager_login(request):
         # Fetch officer data from DynamoDB
         try:
             # Query DynamoDB to fetch the user
-            response = table.get_item(Key={'username': username})
+            response = User.get_dynamo_table().get_item(Key={'username': username})
             if 'Item' not in response:
                 return render(request, 'login.html', {'error': 'User not found'})
 
@@ -163,7 +159,7 @@ class LoanEvaluationView(DetailView, FormView):
 
         message = f"Olá {loan.username}, sua solicitação de empréstimo foi avaliada com o status: {loan.application_status}."
 
-        response = sns.publish(
+        sns.publish(
             TopicArn=topic_arn,
             Message=message,
             Subject="Avaliação de Empréstimo Concluída"
