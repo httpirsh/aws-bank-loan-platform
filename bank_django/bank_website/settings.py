@@ -4,17 +4,25 @@ Django settings for loans_app project.
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Loads variables from a local .env file if present (gitignored, see .env.example).
+# In the devcontainer, env vars come from remoteEnv instead, so this is a no-op there.
+load_dotenv(BASE_DIR.parent / ".env")
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-j2py8&onvksq*e8(^xb*x+)gsb5qkla#og)6@oxg)77)%7s=66"
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-dev-only-key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ["bank-website-env.eba-ganzz9ai.us-east-1.elasticbeanstalk.com", "172.31.40.236", "*"]
+ALLOWED_HOSTS = os.getenv(
+    "DJANGO_ALLOWED_HOSTS",
+    "bank-website-env.eba-ganzz9ai.us-east-1.elasticbeanstalk.com,localhost,127.0.0.1",
+).split(",")
 
 # Application definition
 
@@ -77,11 +85,11 @@ WSGI_APPLICATION = "bank_website.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'db-loan-applications',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'db-loan-applications.cbossg46mje3.us-east-1.rds.amazonaws.com',
-        'PORT': '5432',
+        'NAME': os.getenv('DB_NAME', 'db-loan-applications'),
+        'USER': os.getenv('DB_USER', 'postgres'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
 
@@ -143,5 +151,5 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', 'default-secret-key')
+JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
 

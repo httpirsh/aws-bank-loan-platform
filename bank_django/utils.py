@@ -16,7 +16,6 @@ def generate_jwt_token(user):
         'exp': datetime.now(timezone.utc) + timedelta(days=1)  # Use timezone-aware datetime
     }
     token = jwt.encode(payload, settings.JWT_SECRET_KEY, algorithm='HS256')
-    print(f"Generated JWT Token: {token}")
     return token
 
 def get_jwt_decoded(request):

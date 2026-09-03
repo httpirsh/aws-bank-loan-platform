@@ -1,4 +1,5 @@
 import logging
+import os
 import boto3
 import bcrypt
 from django import forms
@@ -158,7 +159,7 @@ class LoanEvaluationView(DetailView, FormView):
     def send_sns_notification(self, loan):
         sns = boto3.client('sns')
         # ARN do tópico SNS
-        topic_arn = 'arn:aws:sns:us-east-1:211125598817:Notification'
+        topic_arn = os.environ["SNS_NOTIFICATION_TOPIC_ARN"]
 
         # Corpo da mensagem
         message = f"Olá {loan.username}, sua solicitação de empréstimo foi avaliada com o status: {loan.application_status}."
@@ -239,7 +240,7 @@ class LoanWaitingInterviewView(ListView):
     def send_sns_notification_eval(self, loan_evaluation):
         sns = boto3.client('sns')
         # ARN do tópico SNS
-        topic_arn = 'arn:aws:sns:us-east-1:211125598817:Notification'
+        topic_arn = os.environ["SNS_NOTIFICATION_TOPIC_ARN"]
 
         # Obtendo informações necessárias do empréstimo
         loan = loan_evaluation.application

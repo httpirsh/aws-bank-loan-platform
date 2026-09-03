@@ -11,6 +11,7 @@ import datetime
 import base64
 import boto3
 import json
+import os
 import time
 import logging
 from bank_website.settings import AWS_REGION, AWS_COLLECTION_NAME
@@ -227,7 +228,7 @@ class LoanApplicationViewSet(viewsets.ModelViewSet):
         Starts the workflow and retrieves the results.
         """
         execution_name = f"execution_{datetime.datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
-        state_machine_arn = "arn:aws:states:us-east-1:211125598817:stateMachine:Bank-Loan-Machine"
+        state_machine_arn = os.environ["LOAN_WORKFLOW_STATE_MACHINE_ARN"]
 
         # Initialize the Workflow
         response = start_workflow(execution_name, input_data, state_machine_arn)
