@@ -1,6 +1,6 @@
 # Bank Loan Application
 
-[![CI](https://github.com/httpirsh/mecd-es-bank-application/actions/workflows/ci.yml/badge.svg)](https://github.com/httpirsh/mecd-es-bank-application/actions/workflows/ci.yml)
+[![CI](https://github.com/httpirsh/aws-bank-loan-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/httpirsh/aws-bank-loan-platform/actions/workflows/ci.yml)
 
 A loan-application platform (Django REST API + React frontend) built as a software engineering coursework project, deployed on AWS.
 
