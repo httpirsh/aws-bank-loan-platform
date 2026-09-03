@@ -19,8 +19,8 @@ class Command(BaseCommand):
         # Adding an officer
         add_user_to_dynamodb(
             self,
-            username='helder',
-            email='helder@bank.com',
+            username='Íris',
+            email='iris.officer@bank.com',
             phone='0987654321',
             user_type='officer',
             password='securepassword123'
