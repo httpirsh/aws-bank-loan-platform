@@ -6,6 +6,7 @@ from django import forms
 from datetime import datetime
 from datetime import timedelta
 from django.utils import timezone
+from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, FormView
 from api.models import LoanApplication, LoanEvaluation, User
@@ -207,21 +208,20 @@ class LoanWaitingInterviewView(ListView):
         
     def post(self, request, *args, **kwargs):
         # Check whether the user is allowed to change the status
-        if not request.user.is_authenticated:
-            return ValueError("You are not allowed to do this.")
+        auth_user_is(request, ["officer"])
 
         loan_id = request.POST.get('loan_id')
         action = request.POST.get('action')
 
         if not loan_id or action not in ['accept', 'reject']:
-            return ValueError("Invalid action.")
+            return HttpResponseBadRequest("Invalid action.")
 
         # Fetch the loan evaluation by ID
         loan_evaluation = get_object_or_404(LoanEvaluation, pk=loan_id)
 
         # Ensure the loan is currently in 'interview' status
         if loan_evaluation.status != 'interview':
-            return ValueError("Loan is not in interview status.")
+            return HttpResponseBadRequest("Loan is not in interview status.")
 
         # Update the status based on the button pressed
         loan_evaluation.status = action

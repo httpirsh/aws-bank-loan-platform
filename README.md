@@ -6,9 +6,11 @@ A loan-application platform (Django REST API + React frontend) built as a softwa
 
 ## Demo
 
-![Demo: loan simulator and officer dashboard](docs/demo.gif)
+![Demo: loan simulator and full officer evaluation workflow](docs/demo.gif)
 
-*Customer loan simulator, then an officer logging in and viewing incoming loan applications — recorded against a local run of this exact codebase (Postgres + AWS services mocked, no cloud dependency for the recording itself).*
+*Customer loan simulator, then the full officer workflow: reviewing an application, scheduling an interview, resolving it, and a direct accept/reject — recorded against a local run of this exact codebase (Postgres + AWS services mocked, no cloud dependency for the recording itself).*
+
+Two things aren't shown because there's no honest way to fake them locally: the customer's facial-recognition login (needs a real photo matched against a real Rekognition-indexed face) and submitting a new application (its credit decision comes from a Step Functions workflow that doesn't exist outside the original AWS account). Everything else that has a UI is in the GIF above.
 
 The original AWS deployment (Elastic Beanstalk + RDS + DynamoDB) was hosted on a university lab AWS account that's since been decommissioned, so this GIF stands in for a live link.
 
