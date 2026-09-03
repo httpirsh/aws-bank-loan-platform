@@ -71,7 +71,7 @@ Backend tests run against a real PostgreSQL database and mock every AWS call (vi
 
 ```sh
 cd bank_django
-python manage.py test api
+python manage.py test api office
 ```
 
 ## Deployment

@@ -59,7 +59,7 @@ jobs:
 
       - name: Run Django test suite
         working-directory: bank_django
-        run: python manage.py test api
+        run: python manage.py test api office
 
   frontend-build:
     runs-on: ubuntu-latest
