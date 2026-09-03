@@ -194,19 +194,19 @@ class LoanApplicationViewSet(viewsets.ModelViewSet):
             return JsonResponse({"error": str(e)}, status=500)
 
     def list(self, request, *args, **kwargs):
-        user_role = auth_user_is(request, ["officer", "customer"])
+        user = auth_user_is(request, ["officer", "customer"])
 
-        if user_role == "customer":
+        if user["user_type"] == "customer":
             # Only include applications belonging to the authenticated customer
-            self.queryset = self.queryset.filter(customer=request.user)
+            self.queryset = self.queryset.filter(username=user["username"])
 
         return super().list(request, *args, **kwargs)
 
     def retrieve(self, request, *args, **kwargs):
-        user_role = auth_user_is(request, ["officer", "customer"])
+        user = auth_user_is(request, ["officer", "customer"])
 
         instance = self.get_object()
-        if user_role == "customer" and instance.customer != request.user:
+        if user["user_type"] == "customer" and instance.username != user["username"]:
             # Prevent access to records that don't belong to the authenticated customer
             return Response({"error": "You are not authorized to access this application."}, status=403)
 
