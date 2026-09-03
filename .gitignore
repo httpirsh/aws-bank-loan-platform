@@ -8,6 +8,7 @@ __pycache__/
 node_modules/
 nodesource_setup.sh
 bank_django/frontend/dist/
+bank_django/staticfiles/
 
 .vscode/*
 !.vscode/settings.json

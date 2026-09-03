@@ -138,12 +138,14 @@ ASSETS_URL = '/assets/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-STATIC_ROOT = "frontend/dist/assets"
+# STATIC_ROOT is collectstatic's output dir for deployment; it must be
+# separate from STATICFILES_DIRS, which is where collectstatic (and the
+# dev-mode finder) looks for source files - here, the Vite build output.
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = "/assets/"
-#STATIC_ROOT = "static"
-#STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'frontend', 'dist', 'assets'),
 ]
 
 # Default primary key field type

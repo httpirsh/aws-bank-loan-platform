@@ -4,9 +4,13 @@
 
 A loan-application platform (Django REST API + React frontend) built as a software engineering coursework project, deployed on AWS.
 
-![Architecture diagram](docs/architecture.svg)
+## Demo
 
-*(Original planning diagram: [`docs/loans.drawio`](docs/loans.drawio), open in [diagrams.net](https://app.diagrams.net/).)*
+![Demo: loan simulator and officer dashboard](docs/demo.gif)
+
+*Customer loan simulator, then an officer logging in and viewing incoming loan applications — recorded against a local run of this exact codebase (Postgres + AWS services mocked, no cloud dependency for the recording itself).*
+
+The original AWS deployment (Elastic Beanstalk + RDS + DynamoDB) was hosted on a university lab AWS account that's since been decommissioned, so this GIF stands in for a live link.
 
 ## What it does
 
@@ -18,6 +22,10 @@ Handling loan applications by hand means manual verification, back-and-forth sch
 The point of building it wasn't just "a CRUD app with a database" — it's a small but complete example of wiring a real workflow (identity verification, asynchronous evaluation, notifications) to managed AWS services instead of hand-rolling each piece.
 
 ## AWS architecture
+
+![Architecture diagram](docs/architecture.svg)
+
+*(Original planning diagram: [`docs/loans.drawio`](docs/loans.drawio), open in [diagrams.net](https://app.diagrams.net/).)*
 
 | Service | Role in this project |
 |---|---|
