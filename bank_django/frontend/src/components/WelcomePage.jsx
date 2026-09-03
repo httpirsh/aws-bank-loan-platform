@@ -8,7 +8,7 @@ const WelcomePage = () => {
   };
 
   return (
-    <div style={{ textAlign: "center", padding: "2rem" }}>
+    <div style={{ textAlign: "center", padding: "4rem 2rem", maxWidth: "560px", margin: "0 auto" }}>
       <h1>Welcome to Our Loan App</h1>
       <p>
         Explore our loan options with the simulator and easily apply for a loan

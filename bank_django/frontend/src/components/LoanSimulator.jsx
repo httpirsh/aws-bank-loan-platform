@@ -65,7 +65,7 @@ const LoanSimulator = () => {
   };
 
   return (
-    <div style={{ maxWidth: "600px", margin: "0 auto", padding: "2rem" }}>
+    <div style={{ maxWidth: "600px", margin: "2rem auto", padding: "2rem" }} className="card">
       <h1>Loan Simulator</h1>
       <form onSubmit={handleCalculate} style={{ marginBottom: "1rem" }}>
         <div style={{ marginBottom: "1rem" }}>

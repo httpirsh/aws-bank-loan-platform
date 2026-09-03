@@ -1,7 +1,9 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Loan Requests List</title>
+    <link rel="stylesheet" href="{% static 'office/office.css' %}">
 </head>
 <body>
     <h1>Current Loans</h1>
@@ -10,10 +12,9 @@
         <strong>ID:</strong> {{ loan.id }} <br>
         <strong>Customer:</strong> {{ loan.username }} <br>
         <strong>Creation Date:</strong> {{ loan.created }} <br>
-        <strong>Status:</strong> {{ loan.application_status }} <br>
-
+        <strong>Status:</strong> <span class="status-badge status-{{ loan.application_status }}">{{ loan.application_status }}</span> <br>
+        <a href="{% url 'loan_evaluation' loan.id %}"><button>Evaluate</button></a>
     </li>
-        <a href="{% url 'loan_evaluation' loan.id %}"><button>Evaluate</button></a></p>
     {% empty %}
         <p>No current loans available.</p>
     {% endfor %}
@@ -24,16 +25,13 @@
         <strong>ID:</strong> {{ loan.id }} <br>
         <strong>Customer:</strong> {{ loan.username }} <br>
         <strong>Creation Date:</strong> {{ loan.created }} <br>
-        <strong>Status:</strong> {{ loan.application_status }} <br>
-
+        <strong>Status:</strong> <span class="status-badge status-{{ loan.application_status }}">{{ loan.application_status }}</span> <br>
+        <a href="{% url 'loan_evaluation' loan.id %}"><button>Evaluate</button></a>
     </li>
-        <a href="{% url 'loan_evaluation' loan.id %}"><button>Evaluate</button></a></p>
     {% empty %}
-        
         <p>No past loans available.</p>
     {% endfor %}
-    <a href="{% url 'home' %}"><button>Home</button></a></p>
+    <a href="{% url 'home' %}"><button>Home</button></a>
 
 </body>
 </html>
-

@@ -1,7 +1,9 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Loan Waiting for Interview</title>
+    <link rel="stylesheet" href="{% static 'office/office.css' %}">
 </head>
 <body>
     <h1>Loans Waiting for Interview</h1>
@@ -14,7 +16,7 @@
                     <th>Customer</th>
                     <th>Status</th>
                     <th>Timeslots</th>
-                    <th>Actions</th> <!-- Nova coluna para ações -->
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,7 +24,7 @@
                 <tr>
                     <td>{{ loan.application.id }}</td>
                     <td>{{ loan.application.username }}</td>
-                    <td>{{ loan.status }}</td>
+                    <td><span class="status-badge status-{{ loan.status }}">{{ loan.status }}</span></td>
                     <td>
                         {% if loan.timeslot_list %}
                             {% for timeslot in loan.timeslot_list %}
@@ -33,7 +35,6 @@
                         {% endif %}
                     </td>
                     <td>
-                        <!-- Formulários para alterar o status -->
                         <form method="post" action="{% url 'loan_waiting_interview' %}">
                             {% csrf_token %}
                             <input type="hidden" name="loan_id" value="{{ loan.id }}">

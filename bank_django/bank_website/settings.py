@@ -28,6 +28,7 @@ ALLOWED_HOSTS = os.getenv(
 
 INSTALLED_APPS = [
     "api",
+    "office",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
