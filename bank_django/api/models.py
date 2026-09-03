@@ -102,17 +102,19 @@ class LoanEvaluation(models.Model):
     status = models.CharField(
         max_length=11,
         choices=[
+            ('unevaluated', 'Unevaluated'),
             ('accept', 'Accepted'),
             ('interview', 'Interview'),
             ('reject', 'Rejected'),
-        ])
+        ],
+        default='unevaluated')
 
     officer = models.CharField("Officer evaluating the loan application", max_length=255)
     created = models.DateTimeField("When was the evaluation record created", auto_now_add=True)
     updated = models.DateTimeField("Last time the evaluation was updated", auto_now=True)
     
-    # Novo campo para armazenar o timeslot da entrevista
-    timeslots = models.TextField(blank=True, null=True)  # Usando TextField para armazenar múltiplos timeslots
+    # Stores the interview timeslot(s)
+    timeslots = models.TextField(blank=True, null=True)  # Stores multiple timeslots as text
 
 
     def __str__(self):

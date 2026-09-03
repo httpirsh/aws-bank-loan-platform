@@ -21,7 +21,6 @@ logger = logging.getLogger(__name__)
 # Initialize Rekognition and DynamoDB clients
 rekognition_client = boto3.client('rekognition', region_name=AWS_REGION)
 dynamodb = boto3.resource('dynamodb', region_name=AWS_REGION)
-print(f"DynamoDB client initialized: {dynamodb}")
 table = dynamodb.Table('Users')
 
 class LoanSimulationView(View):
@@ -114,7 +113,7 @@ class LoginView(View):
                 return JsonResponse({"error": "No matching face found"}, status=401)
 
         except Exception as e:
-            print(f"Error during Rekognition process: {str(e)}")
+            logger.error(f"Error during Rekognition process: {e}", exc_info=True)
             return JsonResponse({"error": f"Rekognition error: {str(e)}"}, status=500)
 
     def get_user_by_face_id(self, face_id):
@@ -124,14 +123,11 @@ class LoginView(View):
         try:
             dynamodb = boto3.resource('dynamodb', region_name=settings.AWS_REGION)
             table = dynamodb.Table(settings.AWS_DYNAMO_TABLE_NAME)
-            print(f"Table initialized: {table}")
-            print(f"Searching for user with face_id: {face_id} (type: {type(face_id)})")
+            logger.debug(f"Searching for user with face_id: {face_id}")
 
             response = table.scan(
                 FilterExpression=Attr('face_id').eq(str(face_id))
             )
-
-            print(f"DynamoDB response: {response}")
 
             if 'Items' in response and response['Items']:
                 user_data = response['Items'][0]
@@ -147,7 +143,7 @@ class LoginView(View):
                 return None
 
         except Exception as e:
-            print(f"Error retrieving user from DynamoDB: {e}")
+            logger.error(f"Error retrieving user from DynamoDB: {e}", exc_info=True)
             return None
         
 class LoanApplicationViewSet(viewsets.ModelViewSet):
@@ -208,7 +204,7 @@ class LoanApplicationViewSet(viewsets.ModelViewSet):
         user_role = auth_user_is(request, ["officer", "customer"])
 
         if user_role == "customer":
-            # Filtrar somente as aplicações do cliente autenticado
+            # Only include applications belonging to the authenticated customer
             self.queryset = self.queryset.filter(customer=request.user)
 
         return super().list(request, *args, **kwargs)
@@ -218,7 +214,7 @@ class LoanApplicationViewSet(viewsets.ModelViewSet):
 
         instance = self.get_object()
         if user_role == "customer" and instance.customer != request.user:
-            # Impedir acesso a registros que não pertencem ao cliente autenticado
+            # Prevent access to records that don't belong to the authenticated customer
             return Response({"error": "You are not authorized to access this application."}, status=403)
 
         return super().retrieve(request, *args, **kwargs)

@@ -12,6 +12,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         # Adding a customer
         add_user_to_dynamodb(
+            self,
             username='iris',
             email='iris@example.com',
             phone='1234567890',
@@ -20,6 +21,7 @@ class Command(BaseCommand):
 
         # Adding an officer
         add_user_to_dynamodb(
+            self,
             username='helder',
             email='helder@bank.com',
             phone='0987654321',
@@ -27,7 +29,7 @@ class Command(BaseCommand):
             password='securepassword123'
         )
 
-def add_user_to_dynamodb(username, email, phone, user_type, password=None, face_id=None):
+def add_user_to_dynamodb(command, username, email, phone, user_type, password=None, face_id=None):
     try:
         # If the user is an officer, hash the password before storing it
         if user_type == 'officer' and password:
@@ -38,17 +40,17 @@ def add_user_to_dynamodb(username, email, phone, user_type, password=None, face_
 
 
         # Add the user to the DynamoDB table
-        response = table.put_item(
+        table.put_item(
             Item={
                 'username': username,
                 'email': email,
                 'phone': phone,
                 'user_type': user_type,  # 'customer' or 'officer',
                 'face_id': face_id,
-                'password': hashed_password,  
+                'password': hashed_password,
             }
         )
-        print(f"{username} added: {response}")
+        command.stdout.write(command.style.SUCCESS(f"{username} added"))
     except Exception as e:
-        print(f"Failed to add {username}: {e}")
+        command.stdout.write(command.style.ERROR(f"Failed to add {username}: {e}"))
 

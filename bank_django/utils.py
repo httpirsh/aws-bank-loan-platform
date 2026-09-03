@@ -64,7 +64,7 @@ def get_user_from_dynamodb(username):
         else:
             return None
     except Exception as e:
-        print(f"Error retrieving user from DynamoDB: {e}")
+        logger.error(f"Error retrieving user from DynamoDB: {e}", exc_info=True)
         return None
     
 def auth_user_is(request, user_type):
@@ -99,7 +99,7 @@ def start_workflow(execution_name, input_data, state_machine_arn):
         )
         return response
     except Exception as e:
-        print(f"Error starting workflow: {str(e)}")
+        logger.error(f"Error starting workflow: {e}", exc_info=True)
         return None
 
 
@@ -120,7 +120,7 @@ def get_workflow_result(execution_arn):
         else:
             return {"status": status, "message": "Execution still in progress or failed."}
     except Exception as e:
-        print(f"Error retrieving workflow result: {str(e)}")
+        logger.error(f"Error retrieving workflow result: {e}", exc_info=True)
         return {"status": "error", "message": "Could not retrieve the result."}
     
 

@@ -19,6 +19,7 @@ black>=23.9.1                # Automatic code formatter
 # Testing
 pytest>=7.4.2                # General-purpose testing framework
 pytest-django>=4.5.2         # Django-specific pytest extensions
+moto[dynamodb]>=5.0.0,<6.0.0 # Mocks AWS services (DynamoDB) in tests, no real AWS calls
 
 # Production server
 daphne>=4.0.0                # ASGI server for handling WebSocket connections

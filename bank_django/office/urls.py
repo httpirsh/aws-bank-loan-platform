@@ -2,11 +2,11 @@ from django.urls import path
 from .views import welcome_page, manager_login, home_page, LoanRequestsListView, LoanEvaluationView, LoanEvaluatedView, LoanWaitingInterviewView
 
 urlpatterns = [
-    path('', welcome_page, name='welcome_page'),  # Página inicial de boas-vindas
-    path('login/', manager_login, name='login'),  # Página de login
-    path('home/', home_page, name='home'),  # Página inicial após o login
-    path('loan-requests-list/', LoanRequestsListView.as_view(), name='loan_requests_list'),  # Lista de empréstimos
-    path('loan-evaluation/<int:loan_id>/', LoanEvaluationView.as_view(), name='loan_evaluation'),  # Avaliação do empréstimo
-    path('loan-evaluated/', LoanEvaluatedView.as_view(), name='loan_evaluated'),  # Empréstimos avaliados
-    path('loan-waiting-interview/', LoanWaitingInterviewView.as_view(), name='loan_waiting_interview'),  # Empréstimos aguardando entrevista
+    path('', welcome_page, name='welcome_page'),  # Welcome landing page
+    path('login/', manager_login, name='login'),  # Login page
+    path('home/', home_page, name='home'),  # Home page after login
+    path('loan-requests-list/', LoanRequestsListView.as_view(), name='loan_requests_list'),  # Loan request list
+    path('loan-evaluation/<int:loan_id>/', LoanEvaluationView.as_view(), name='loan_evaluation'),  # Loan evaluation
+    path('loan-evaluated/', LoanEvaluatedView.as_view(), name='loan_evaluated'),  # Evaluated loans
+    path('loan-waiting-interview/', LoanWaitingInterviewView.as_view(), name='loan_waiting_interview'),  # Loans awaiting interview
 ]
